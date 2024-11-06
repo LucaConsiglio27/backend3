@@ -3,7 +3,8 @@ const { generatePets } = require('../mocks/mockingPets');
 const { generateUsers } = require('../mocks/mockingUsers');
 
 exports.generateMockPets = (req, res) => {
-    const pets = generatePets(100);
+    const count = parseInt(req.query.count) || 100;  // Valor por defecto: 100
+    const pets = generatePets(count);
     res.json(pets);
 };
 
