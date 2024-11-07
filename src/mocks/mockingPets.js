@@ -1,6 +1,11 @@
 // src/mocks/mockingPets.js
 const faker = require('faker');
 
+/**
+ * Genera una lista de mascotas con el formato de MongoDB.
+ * @param {number} count - Número de mascotas a generar.
+ * @returns {Array} - Array de objetos mascota.
+ */
 const generatePets = (count) => {
     return Array.from({ length: count }).map(() => ({
         name: faker.name.firstName(),
