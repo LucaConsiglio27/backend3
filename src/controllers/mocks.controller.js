@@ -1,7 +1,7 @@
-import faker from 'faker';
 import bcrypt from 'bcrypt';
 import Pet from '../models/pet.model.js';
 import User from '../models/user.model.js';
+import { faker } from '@faker-js/faker';
 
 export const generateMockPets = (req, res) => {
     const pets = Array.from({ length: 100 }, () => ({

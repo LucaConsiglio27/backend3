@@ -3,13 +3,17 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import swaggerDocument from './src/docs/swagger.js';
 import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
-import logger from './utils/logger.js';
-import mocksRouter from './routes/mocks.router.js';
-import usersRouter from './routes/users.router.js';
-import petsRouter from './routes/pets.router.js';
-import adoptionRouter from './routes/adoption.router.js';
+import logger from './src/utils/logger.js';
+import mocksRouter from './src/routes/mocks.router.js';
+import usersRouter from './src/routes/users.router.js';
+import petsRouter from './src/routes/pets.router.js';
+import adoptionRouter from './src/routes/adoption.router.js';
+import sessionRouter from './src/routes/sessions.router.js';
+
+
 
 dotenv.config();
 
@@ -30,6 +34,9 @@ app.use('/api/mocks', mocksRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/pets', petsRouter);
 app.use('/api/adoption', adoptionRouter);
+app.use('/api/pets', petsRouter);
+app.use('/api/sessions', sessionRouter);
+app.use('/api/adoptions', adoptionRouter);
 
 // Logger test endpoint
 app.get('/loggerTest', (req, res) => {
@@ -43,7 +50,7 @@ app.get('/loggerTest', (req, res) => {
 });
 
 // Swagger documentation
-const swaggerDocument = JSON.parse(fs.readFileSync('./swagger.yaml', 'utf-8'));
+
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handler
@@ -53,12 +60,13 @@ app.use((err, req, res, next) => {
 });
 
 // Database connection and server start
+// Database connection and server start
 mongoose
-    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.MONGO_URI)
     .then(() => {
         logger.info('Conectado a la base de datos');
         app.listen(PORT, () => {
-            logger.info(`Servidor corriendo en http://localhost:${PORT}`);
+            logger.info(`Servidor corriendo en http://localhost:${3000}`);
         });
     })
     .catch((err) => {
